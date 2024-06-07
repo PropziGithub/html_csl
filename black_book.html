@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -292,6 +294,15 @@ section.stap {
                 //alert("Please fill all required fields.")
             }
         }
+
+    function backFunction(temp, Prev) {
+    $('.page' + temp).css('display', 'none');
+    $('.page' + Prev).css('display', 'block');
+
+    var tt = Prev * 5;
+    $('.progress-bar').css('width', tt + '%');
+    console.log(Prev);
+}
 
         function singlefieldvalidate(temp, msg) {
             $('.err').remove();
@@ -787,6 +798,8 @@ section.stap {
                         </div>
                         <div class="form-group" align="center">
                             <div style="margin:20px 0;border-radius: 10px;">
+                                <input type="button" id="back11" value="Back" onclick="backFunction('1','2')"
+                                 style="font-size: 24px; background-color: #d7d7d7;" />
                                 <input type="button" id="next2" value="Next" onclick="nextFunction('2','3')"
                                     style="font-size: 24px;" />
                             </div>
