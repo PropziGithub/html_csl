@@ -966,29 +966,37 @@ section.stap {
                             <label for="make">
                                 What Make is Your Vehicle?
                             </label><br>
-                            <input class="form-control" id="make" name="make" aria-label="select make"
-                                style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px"/>
+                            <select id="make" disabled class="form-select"  name="make" aria-label="select make"
+                            style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px">
+                                <option value="">Select Make</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="model">
                                 What Model is Your Vehicle?
                             </label><br>
-                            <input class="form-control" id="model" name="model" aria-label="select Model"
-                                style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px"/>
+                            <select id="model" disabled class="form-select"  name="model" aria-label="select Model"
+                            style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px">
+                                <option value="">Select Model</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="series">
                                 What Series is Your Vehicle?
                             </label><br>
-                            <input class="form-control" id="series" name="model" aria-label="select series"
-                                style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px"/>
+                            <select id="series" disabled class="form-select"  name="series" aria-label="select Series"
+                            style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px">
+                                <option value="">Select Series</option>
+                            </select>
                         </div>
                          <div class="form-group">
                             <label for="bodyStyle">
                                 What Body Style is Your Vehicle?
                             </label><br>
-                            <input class="form-control" id="bodyStyle" name="bodyStyle" aria-label="select bodyStyle"
-                                style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px"/>
+                            <select id="bodyStyle" disabled class="form-select"  name="odyStyle" aria-label="select bodyStyle"
+                            style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px">
+                                <option value="">Select Body Style</option>
+                            </select>
                         </div>
                         <div class="form-group" align="center">
                             <div style="margin:20px 0;border-radius: 10px;">
@@ -1574,177 +1582,128 @@ $( function() {
         } );
 </script>
 
-    <script>
-        $(document).ready(function() {
-            var username = 'CanCap_API_VIN';
-            var password = 'hF8TaGnyF3aL';
-            var auth = btoa(username + ':' + password);
-            
-            var RESULTS_PER_SEARCH = 30
+<script>
+    $(document).ready(function() {
+        var username = 'CanCap_API_VIN';
+        var password = 'hF8TaGnyF3aL';
+        var auth = btoa(username + ':' + password); 
 
-            $("#make").autocomplete({
-                source: function(request, response) {
-                    var query = `
-                        query {
-                        	autocomplete (searchtext:"${request.term}" maxresults: ${RESULTS_PER_SEARCH}){
-                        		matching_vehicles {
-                        			make
-                        		}
-                        	}
-                        }
-                    `;
-
-                    $.ajax({
-                        url: 'https://service.canadianblackbook.com/UsedCarWS/CanUsedAPI/GraphQL',
-                        type: 'POST',
-                        contentType: 'application/json',
-                        dataType: 'json',
-                        headers: {
-                            'Authorization': 'Basic ' + auth
-                        },
-                        data: JSON.stringify({ query: query }),
-                        success: function(data) {
-                            var modelSet = new Set()
-                            var results = data.data.autocomplete.matching_vehicles.map(function(item) {
-                                return item.make
-                            });
-                            results.forEach(function(model){
-                                modelSet.add(model)
-                            })
-                            
-                            response([...modelSet]);
-                        },
-                        error: function(error) {
-                            console.error(error);
-                        }
-                    });
-                },
-                minLength: 0,
-            });
-            
-            $("#model").autocomplete({
-                source: function(request, response) {
-                    var query = `
-                        query {
-                        	autocomplete (searchtext:"${request.term}" maxresults: ${RESULTS_PER_SEARCH}){
-                        		matching_vehicles {
-                        			model
-                        		}
-                        	}
-                        }
-                    `;
-
-                    $.ajax({
-                        url: 'https://service.canadianblackbook.com/UsedCarWS/CanUsedAPI/GraphQL',
-                        type: 'POST',
-                        contentType: 'application/json',
-                        dataType: 'json',
-                        headers: {
-                            'Authorization': 'Basic ' + auth
-                        },
-                        data: JSON.stringify({ query: query }),
-                        success: function(data) {
-                            var modelSet = new Set()
-                            var results = data.data.autocomplete.matching_vehicles.map(function(item) {
-                                return item.model
-                            })
-                            
-                            results.forEach(function(model){
-                                modelSet.add(model)
-                            })
-                            
-                            response([...modelSet]);
-                        },
-                        error: function(error) {
-                            console.error(error);
-                        }
-                    });
-                },
-                minLength: 0,
-            });
-            
-            $("#series").autocomplete({
-                source: function(request, response) {
-                    var query = `
-                        query {
-                        	autocomplete (searchtext:"${request.term}" maxresults: ${RESULTS_PER_SEARCH}){
-                        		matching_vehicles {
-                        			series
-                        		}
-                        	}
-                        }
-                    `;
-
-                    $.ajax({
-                        url: 'https://service.canadianblackbook.com/UsedCarWS/CanUsedAPI/GraphQL',
-                        type: 'POST',
-                        contentType: 'application/json',
-                        dataType: 'json',
-                        headers: {
-                            'Authorization': 'Basic ' + auth
-                        },
-                        data: JSON.stringify({ query: query }),
-                        success: function(data) {
-                            var seriesSet = new Set()
-                            var results = data.data.autocomplete.matching_vehicles.map(function(item) {
-                                return item.series
-                            })
-                            
-                            results.forEach(function(series){
-                                seriesSet.add(series)
-                            })
-                            
-                            response([...seriesSet]);
-                        },
-                        error: function(error) {
-                            console.error(error);
-                        }
-                    });
-                },
-                minLength: 0,
-            });
-            $("#bodyStyle").autocomplete({
-                source: function(request, response) {
-                    var query = `
-                        query {
-                        	autocomplete (searchtext:"${request.term}" maxresults: ${RESULTS_PER_SEARCH}){
-                        		matching_vehicles {
-                        			style
-                        		}
-                        	}
-                        }
-                    `;
-
-                    $.ajax({
-                        url: 'https://service.canadianblackbook.com/UsedCarWS/CanUsedAPI/GraphQL',
-                        type: 'POST',
-                        contentType: 'application/json',
-                        dataType: 'json',
-                        headers: {
-                            'Authorization': 'Basic ' + auth
-                        },
-                        data: JSON.stringify({ query: query }),
-                        success: function(data) {
-                            var styleSet = new Set()
-                            var results = data.data.autocomplete.matching_vehicles.map(function(item) {
-                                return item.style
-                            })
-                            
-                            results.forEach(function(style){
-                                styleSet.add(style)
-                            })
-                            
-                            response([...styleSet]);
-                        },
-                        error: function(error) {
-                            console.error(error);
-                        }
-                    });
-                },
-                minLength: 0,
-            });
+        $('#year').change(function() {
+            const year = $(this).val();
+            if (year) {
+                $.ajax({
+                    url: `https://service.canadianblackbook.com/UsedCarWS/CanUsedAPI/Drilldown/ALL/${year}`,
+                    method: 'GET',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    headers: {
+                        'Authorization': 'Basic ' + auth
+                    },
+                    success: function(data) {
+                        const makeDropdown = $('#make');
+                        makeDropdown.empty().append('<option value="">Select Make</option>');
+                        data.drilldown.class_list[0].year_list[0].make_list.forEach(make => {
+                            makeDropdown.append(`<option value="${make.name}">${make.name}</option>`);
+                        });
+                        makeDropdown.prop('disabled', false);
+                    }
+                });
+            } else {
+                $('#make').prop('disabled', true).empty().append('<option value="">Select Make</option>');
+                $('#model, #series, #bodyStyle').prop('disabled', true).empty().append('<option value="">Select Model/Series/Style</option>');
+            }
         });
-    </script>
-</body>
 
+        $('#make').change(function() {
+            const year = $('#year').val();
+            const make = $(this).val();
+            if (make) {
+                $.ajax({
+                    url: `https://service.canadianblackbook.com/UsedCarWS/CanUsedAPI/Drilldown/ALL/${year}/${make}`,
+                    method: 'GET',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    headers: {
+                        'Authorization': 'Basic ' + auth
+                    },
+                    success: function(data) {
+                        const modelDropdown = $('#model');
+                        modelDropdown.empty().append('<option value="">Select Model</option>');
+                        data.drilldown.class_list[0].year_list[0].make_list[0].model_list.forEach(model => {
+                            modelDropdown.append(`<option value="${model.name}">${model.name}</option>`);
+                        });
+                        modelDropdown.prop('disabled', false);
+                    }
+                });
+            } else {
+                $('#model, #series, #bodyStyle').prop('disabled', true).empty().append('<option value="">Select Model/Series/Style</option>');
+            }
+        });
+
+        $('#model').change(function() {
+            const year = $('#year').val();
+            const make = $('#make').val();
+            const model = $(this).val();
+            if (model) {
+                $.ajax({
+                    url: `https://service.canadianblackbook.com/UsedCarWS/CanUsedAPI/Drilldown/ALL/${year}/${make}`,
+                    method: 'GET',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    headers: {
+                        'Authorization': 'Basic ' + auth
+                    },
+                    success: function(data) {
+                        const seriesDropdown = $('#series');
+                        seriesDropdown.empty().append('<option value="">Select Series</option>');
+                        const modelData = data.drilldown.class_list[0].year_list[0].make_list[0].model_list.find(m => m.name === model);
+                        if (modelData) {
+                            modelData.series_list.forEach(series => {
+                                seriesDropdown.append(`<option value="${series.name}">${series.name}</option>`);
+                            });
+                            seriesDropdown.prop('disabled', false);
+                        }
+                    }
+                });
+            } else {
+                $('#series, #bodyStyle').prop('disabled', true).empty().append('<option value="">Select Series/Style</option>');
+            }
+        });
+
+        $('#series').change(function() {
+            const year = $('#year').val();
+            const make = $('#make').val();
+            const model = $('#model').val();
+            const series = $(this).val();
+            if (series) {
+                $.ajax({
+                    url: `https://service.canadianblackbook.com/UsedCarWS/CanUsedAPI/Drilldown/ALL/${year}/${make}`,
+                    method: 'GET',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    headers: {
+                        'Authorization': 'Basic ' + auth
+                    },
+                    success: function(data) {
+                        const styleDropdown = $('#bodyStyle');
+                        styleDropdown.empty().append('<option value="">Select Style</option>');
+                        const modelData = data.drilldown.class_list[0].year_list[0].make_list[0].model_list.find(m => m.name === model);
+                        if (modelData) {
+                            const seriesData = modelData.series_list.find(s => s.name === series);
+                            if (seriesData) {
+                                seriesData.style_list.forEach(style => {
+                                    styleDropdown.append(`<option value="${style.name}">${style.name}</option>`);
+                                });
+                                styleDropdown.prop('disabled', false);
+                            }
+                        }
+                    }
+                });
+            } else {
+                $('#bodyStyle').prop('disabled', true).empty().append('<option value="">Select Style</option>');
+            }
+        });
+    });
+</script>
+</body>
 </html>
