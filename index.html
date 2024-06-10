@@ -420,7 +420,18 @@ section.stap {
                 }
             }
             else if (temp == "6") {
-        if ($('#modelYear').val() == '') {
+        var vin = $('#vin').val().trim();
+        if(vin.length > 0) {
+        if (vin != '' && vin.length != 17) {
+            $("<span class='err'>VIN must be 17 characters long</span>").insertAfter("#vin");
+            flag = false;
+        } else {
+            $("#vin").next('.err').remove();
+        }
+       }
+
+       if(!vin || vin.length <= 0){
+            if ($('#modelYear').val() == '') {
             $("<span class='err'>This is required</span>").insertAfter("#modelYear");
             flag = false;
         } else {
@@ -450,12 +461,6 @@ section.stap {
         } else {
             $("#bodyStyle").next('.err').remove();
         }
-        var vin = $('#vin').val().trim();
-        if (vin != '' && vin.length != 17) {
-            $("<span class='err'>VIN must be 17 characters long</span>").insertAfter("#vin");
-            flag = false;
-        } else {
-            $("#vin").next('.err').remove();
         }
         return flag;
     }
@@ -975,6 +980,20 @@ section.stap {
                     <div class="col-md-3"></div>
                     <div class="col-md-6">
                         <div class="form-group" style="margin-bottom: 10px;">
+                            <label for="vin">
+                                VIN
+                            </label><br>
+                            <input class="form-control" id="vin" name="vin" aria-label="vin" placeholder="VIN (optional)"
+                                style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px"/>
+                        </div>
+        
+                        <div style="display: inline-block; width: 100%; text-align: center; margin: 20px 0;">
+                            <span style="width: 45%; height: 1px; background: black; display: inline-block; vertical-align: middle;"></span>
+                            <span style="display: inline-block; vertical-align: middle; padding: 0 10px; font-weight: semibold;">OR</span>
+                            <span style="width: 45%; height: 1px; background: black; display: inline-block; vertical-align: middle;"></span>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 10px;">
                             <label for="modelYear">
                                 What Model Year is Your Vehicle?
                             </label><br>
@@ -998,13 +1017,6 @@ section.stap {
                                 <option value="2013">2011</option>
                                 <option value="2013">2010</option>
                             </select>
-                        </div>
-                        <div class="form-group" style="margin-bottom: 10px;">
-                            <label for="vin">
-                                VIN
-                            </label><br>
-                            <input class="form-control" id="vin" name="vin" aria-label="vin" placeholder="VIN (optional)"
-                                style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px"/>
                         </div>
                         <div class="form-group" style="margin-bottom: 10px;">
                             <label for="make">
