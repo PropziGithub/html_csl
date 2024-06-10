@@ -420,15 +420,45 @@ section.stap {
                 }
             }
             else if (temp == "6") {
-                if ($('#modelYear').val() != '') {
-
-                    return true;
-                }
-                else {
-                    $("<span class='err'>This is required</span>").insertAfter("#modelYear");
-                    return false
-                }
-            }
+        if ($('#modelYear').val() == '') {
+            $("<span class='err'>This is required</span>").insertAfter("#modelYear");
+            flag = false;
+        } else {
+            $("#modelYear").next('.err').remove();
+        }
+        if ($('#make').val() == '') {
+            $("<span class='err'>This is required</span>").insertAfter("#make");
+            flag = false;
+        } else {
+            $("#make").next('.err').remove();
+        }
+        if ($('#model').val() == '') {
+            $("<span class='err'>This is required</span>").insertAfter("#model");
+            flag = false;
+        } else {
+            $("#model").next('.err').remove();
+        }
+        if ($('#series').val() == '') {
+            $("<span class='err'>This is required</span>").insertAfter("#series");
+            flag = false;
+        } else {
+            $("#series").next('.err').remove();
+        }
+        if ($('#bodyStyle').val() == '') {
+            $("<span class='err'>This is required</span>").insertAfter("#bodyStyle");
+            flag = false;
+        } else {
+            $("#bodyStyle").next('.err').remove();
+        }
+        var vin = $('#vin').val().trim();
+        if (vin != '' && vin.length != 17) {
+            $("<span class='err'>VIN must be 17 characters long</span>").insertAfter("#vin");
+            flag = false;
+        } else {
+            $("#vin").next('.err').remove();
+        }
+        return flag;
+    }
             else if (temp == "7") {
                 if ($('#mileage').val().trim() != '') {
 
@@ -968,6 +998,13 @@ section.stap {
                                 <option value="2013">2011</option>
                                 <option value="2013">2010</option>
                             </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 10px;">
+                            <label for="vin">
+                                VIN
+                            </label><br>
+                            <input class="form-control" id="vin" name="vin" aria-label="vin" placeholder="vin (optional)"
+                                style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px"/>
                         </div>
                         <div class="form-group" style="margin-bottom: 10px;">
                             <label for="make">
