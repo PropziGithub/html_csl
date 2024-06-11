@@ -1761,5 +1761,28 @@ $( function() {
         });
     });
 </script>
+
+<!-- Google places -->
+<script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8xTI34iIvlUVMCfIUBzdjQLClIsqjbvg&libraries=places&callback=initAutocomplete&loading=async">
+    </script>
+   <script>
+    function initAutocomplete() {
+        const input = $('#homeaddress')[0];
+        const options = {
+            componentRestrictions: { country: 'ca' }
+        };
+        const autocomplete = new google.maps.places.Autocomplete(input, options);
+
+        autocomplete.addListener('place_changed', function() {
+            const place = autocomplete.getPlace();
+            if (place.geometry) {
+                $('#homeaddress').val(place.formatted_address);
+            } else {
+                console.log('No details available for the selected place.');
+            }
+        });
+    }
+</script>
 </body>
 </html>
