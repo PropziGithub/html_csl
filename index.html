@@ -510,7 +510,7 @@ section.stap {
                     return true;
                 }
                 else {
-                    $("<span class='err'>This is required</span>").insertAfter("#modelYear");
+                    $("<span class='err'>This is required</span>").insertAfter("#owner");
                     return false
                 }
             }
@@ -1743,12 +1743,14 @@ $( function() {
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8xTI34iIvlUVMCfIUBzdjQLClIsqjbvg&libraries=places&callback=initAutocomplete&loading=async">
     </script>
    <script>
-    function initAutocomplete() {
-        const input = $('#homeaddress')[0];
+    function initAutocomplete(elementID) {
+        const input1 = $('#homeaddress')[0];
+        const input2 = $('#previousaddress')[0];
         const options = {
             componentRestrictions: { country: 'ca' }
         };
-        const autocomplete = new google.maps.places.Autocomplete(input, options);
+        if(input1){
+            const autocomplete = new google.maps.places.Autocomplete(input1, options);
 
         autocomplete.addListener('place_changed', function() {
             const place = autocomplete.getPlace();
@@ -1758,7 +1760,19 @@ $( function() {
                 console.log('No details available for the selected place.');
             }
         });
-    }
+        }
+        if(input2){
+        const autocomplete = new google.maps.places.Autocomplete(input2, options);
+        autocomplete.addListener('place_changed', function() {
+            const place = autocomplete.getPlace();
+            if (place.geometry) {
+                $('#previousaddress').val(place.formatted_address);
+            } else {
+                console.log('No details available for the selected place.');
+            }
+        });
+        }
+        }
 </script>
 </body>
 </html>
