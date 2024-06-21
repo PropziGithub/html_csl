@@ -82,8 +82,17 @@
             padding: 5px 10px !important;
             border: 1px solid gray;
             border-radius: 10px !important;
-font-size: 14px;
+            font-size: 14px;
             background-color: whitesmoke;
+        }
+
+        .form-select:disabled {
+            background-color: gray;
+            color: lightgray;
+        }
+
+        .form-select:disabled option {
+            color: lightgray;
         }
 
         .Credit_Consent,
@@ -411,15 +420,50 @@ section.stap {
                 }
             }
             else if (temp == "6") {
-                if ($('#modelYear').val() != '') {
+        var vin = $('#vin').val().trim();
+        if(vin.length > 0) {
+        if (vin != '' && vin.length != 17) {
+            $("<span class='err'>VIN must be 17 characters long</span>").insertAfter("#vin");
+            flag = false;
+        } else {
+            $("#vin").next('.err').remove();
+        }
+       }
 
-                    return true;
-                }
-                else {
-                    $("<span class='err'>This is required</span>").insertAfter("#modelYear");
-                    return false
-                }
-            }
+       if(!vin || vin.length <= 0){
+            if ($('#modelYear').val() == '') {
+            $("<span class='err'>This is required</span>").insertAfter("#modelYear");
+            flag = false;
+        } else {
+            $("#modelYear").next('.err').remove();
+        }
+        if ($('#make').val() == '') {
+            $("<span class='err'>This is required</span>").insertAfter("#make");
+            flag = false;
+        } else {
+            $("#make").next('.err').remove();
+        }
+        if ($('#model').val() == '') {
+            $("<span class='err'>This is required</span>").insertAfter("#model");
+            flag = false;
+        } else {
+            $("#model").next('.err').remove();
+        }
+        if ($('#series').val() == '') {
+            $("<span class='err'>This is required</span>").insertAfter("#series");
+            flag = false;
+        } else {
+            $("#series").next('.err').remove();
+        }
+        if ($('#bodyStyle').val() == '') {
+            $("<span class='err'>This is required</span>").insertAfter("#bodyStyle");
+            flag = false;
+        } else {
+            $("#bodyStyle").next('.err').remove();
+        }
+        }
+        return flag;
+    }
             else if (temp == "7") {
                 if ($('#mileage').val().trim() != '') {
 
@@ -466,7 +510,7 @@ section.stap {
                     return true;
                 }
                 else {
-                    $("<span class='err'>This is required</span>").insertAfter("#modelYear");
+                    $("<span class='err'>This is required</span>").insertAfter("#owner");
                     return false
                 }
             }
@@ -798,8 +842,6 @@ section.stap {
                         </div>
                         <div class="form-group" align="center">
                             <div style="margin:20px 0;border-radius: 10px;">
-                                <input type="button" id="back11" value="Back" onclick="backFunction('1','2')"
-                                 style="font-size: 24px; background-color: #d7d7d7;" />
                                 <input type="button" id="next2" value="Next" onclick="nextFunction('2','3')"
                                     style="font-size: 24px;" />
                             </div>
@@ -937,7 +979,22 @@ section.stap {
                 <div class="row">
                     <div class="col-md-3"></div>
                     <div class="col-md-6">
-                        <div class="form-group">
+                        <div class="form-group" style="margin-bottom: 10px;">
+                            <label for="vin">
+                                VIN
+                            </label><br>
+                            <input class="form-control" id="vin" name="vin" aria-label="vin" placeholder="VIN (optional)"
+                                style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px"/>
+                        </div>
+        
+                        <div style="white-space: nowrap; text-align: center; margin: 20px 0;">
+                            <span style="display: inline-block; width: 45%; height: 1px; background: black; vertical-align: middle;"></span>
+                            <span style="display: inline-block; vertical-align: middle; padding: 0 10px; font-weight: bold;">OR</span>
+                            <span style="display: inline-block; width: 45%; height: 1px; background: black; vertical-align: middle;"></span>
+                        </div>
+                        
+
+                        <div class="form-group" style="margin-bottom: 10px;">
                             <label for="modelYear">
                                 What Model Year is Your Vehicle?
                             </label><br>
@@ -962,40 +1019,40 @@ section.stap {
                                 <option value="2013">2010</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="margin-bottom: 10px;">
                             <label for="make">
                                 What Make is Your Vehicle?
                             </label><br>
                             <select id="make" disabled class="form-select"  name="make" aria-label="select make"
                             style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px">
-                                <option value="">Select Make</option>
+                                <option value="">Select make</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="margin-bottom: 10px;">
                             <label for="model">
                                 What Model is Your Vehicle?
                             </label><br>
                             <select id="model" disabled class="form-select"  name="model" aria-label="select Model"
                             style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px">
-                                <option value="">Select Model</option>
+                                <option value="">Select model</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="margin-bottom: 10px;">
                             <label for="series">
                                 What Series is Your Vehicle?
                             </label><br>
                             <select id="series" disabled class="form-select"  name="series" aria-label="select Series"
                             style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px">
-                                <option value="">Select Series</option>
+                                <option value="">Select series</option>
                             </select>
                         </div>
-                         <div class="form-group">
+                         <div class="form-group" style="margin-bottom: 10px;">
                             <label for="bodyStyle">
                                 What Body Style is Your Vehicle?
                             </label><br>
                             <select id="bodyStyle" disabled class="form-select"  name="odyStyle" aria-label="select bodyStyle"
                             style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px">
-                                <option value="">Select Body Style</option>
+                                <option value="">Select style</option>
                             </select>
                         </div>
                         <div class="form-group" align="center">
@@ -1018,31 +1075,6 @@ section.stap {
                         <div class="form-group">
                             <label for="mileage">
                                 What Is The Mileage On Your Vehicle?
-                            </label><br>
-                            <input type="number" class="form-control" id="mileage" name="mileage"
-                                onfocusout="singlefieldvalidate('mileage','Mileage')" />
-                        </div>
-                        <div class="form-group" align="center">
-                            <div style="margin:20px 0;border-radius: 10px;">
-                                <input type="button" id="next7" value="Next" onclick="nextFunction('7','8')"
-                                    style="font-size: 24px;" />
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-md-3"></div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="row page8" style="display: none;">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="mileage">
-                                Manuturaer 
                             </label><br>
                             <input type="number" class="form-control" id="mileage" name="mileage"
                                 onfocusout="singlefieldvalidate('mileage','Mileage')" />
@@ -1588,7 +1620,7 @@ $( function() {
         var password = 'hF8TaGnyF3aL';
         var auth = btoa(username + ':' + password); 
 
-        $('#year').change(function() {
+        $('#modelYear').change(function() {
             const year = $(this).val();
             if (year) {
                 $.ajax({
@@ -1601,7 +1633,7 @@ $( function() {
                     },
                     success: function(data) {
                         const makeDropdown = $('#make');
-                        makeDropdown.empty().append('<option value="">Select Make</option>');
+                        makeDropdown.empty().append('<option value="">Select make</option>');
                         data.drilldown.class_list[0].year_list[0].make_list.forEach(make => {
                             makeDropdown.append(`<option value="${make.name}">${make.name}</option>`);
                         });
@@ -1609,13 +1641,13 @@ $( function() {
                     }
                 });
             } else {
-                $('#make').prop('disabled', true).empty().append('<option value="">Select Make</option>');
-                $('#model, #series, #bodyStyle').prop('disabled', true).empty().append('<option value="">Select Model/Series/Style</option>');
+                $('#make').prop('disabled', true).empty().append('<option value="">Select make</option>');
+                $('#model, #series, #bodyStyle').prop('disabled', true).empty().append('<option value="">Select model/series/style</option>');
             }
         });
 
         $('#make').change(function() {
-            const year = $('#year').val();
+            const year = $('#modelYear').val();
             const make = $(this).val();
             if (make) {
                 $.ajax({
@@ -1628,7 +1660,7 @@ $( function() {
                     },
                     success: function(data) {
                         const modelDropdown = $('#model');
-                        modelDropdown.empty().append('<option value="">Select Model</option>');
+                        modelDropdown.empty().append('<option value="">Select model</option>');
                         data.drilldown.class_list[0].year_list[0].make_list[0].model_list.forEach(model => {
                             modelDropdown.append(`<option value="${model.name}">${model.name}</option>`);
                         });
@@ -1636,12 +1668,12 @@ $( function() {
                     }
                 });
             } else {
-                $('#model, #series, #bodyStyle').prop('disabled', true).empty().append('<option value="">Select Model/Series/Style</option>');
+                $('#model, #series, #bodyStyle').prop('disabled', true).empty().append('<option value="">Select model/series/style</option>');
             }
         });
 
         $('#model').change(function() {
-            const year = $('#year').val();
+            const year = $('#modelYear').val();
             const make = $('#make').val();
             const model = $(this).val();
             if (model) {
@@ -1655,7 +1687,7 @@ $( function() {
                     },
                     success: function(data) {
                         const seriesDropdown = $('#series');
-                        seriesDropdown.empty().append('<option value="">Select Series</option>');
+                        seriesDropdown.empty().append('<option value="">Select series</option>');
                         const modelData = data.drilldown.class_list[0].year_list[0].make_list[0].model_list.find(m => m.name === model);
                         if (modelData) {
                             modelData.series_list.forEach(series => {
@@ -1666,12 +1698,12 @@ $( function() {
                     }
                 });
             } else {
-                $('#series, #bodyStyle').prop('disabled', true).empty().append('<option value="">Select Series/Style</option>');
+                $('#series, #bodyStyle').prop('disabled', true).empty().append('<option value="">Select series/style</option>');
             }
         });
 
         $('#series').change(function() {
-            const year = $('#year').val();
+            const year = $('#modelYear').val();
             const make = $('#make').val();
             const model = $('#model').val();
             const series = $(this).val();
@@ -1686,7 +1718,7 @@ $( function() {
                     },
                     success: function(data) {
                         const styleDropdown = $('#bodyStyle');
-                        styleDropdown.empty().append('<option value="">Select Style</option>');
+                        styleDropdown.empty().append('<option value="">Select style</option>');
                         const modelData = data.drilldown.class_list[0].year_list[0].make_list[0].model_list.find(m => m.name === model);
                         if (modelData) {
                             const seriesData = modelData.series_list.find(s => s.name === series);
@@ -1700,10 +1732,47 @@ $( function() {
                     }
                 });
             } else {
-                $('#bodyStyle').prop('disabled', true).empty().append('<option value="">Select Style</option>');
+                $('#bodyStyle').prop('disabled', true).empty().append('<option value="">Select style</option>');
             }
         });
     });
+</script>
+
+<!-- Google places -->
+<script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8xTI34iIvlUVMCfIUBzdjQLClIsqjbvg&libraries=places&callback=initAutocomplete&loading=async">
+    </script>
+   <script>
+    function initAutocomplete(elementID) {
+        const input1 = $('#homeaddress')[0];
+        const input2 = $('#previousaddress')[0];
+        const options = {
+            componentRestrictions: { country: 'ca' }
+        };
+        if(input1){
+            const autocomplete = new google.maps.places.Autocomplete(input1, options);
+
+        autocomplete.addListener('place_changed', function() {
+            const place = autocomplete.getPlace();
+            if (place.geometry) {
+                $('#homeaddress').val(place.formatted_address);
+            } else {
+                console.log('No details available for the selected place.');
+            }
+        });
+        }
+        if(input2){
+        const autocomplete = new google.maps.places.Autocomplete(input2, options);
+        autocomplete.addListener('place_changed', function() {
+            const place = autocomplete.getPlace();
+            if (place.geometry) {
+                $('#previousaddress').val(place.formatted_address);
+            } else {
+                console.log('No details available for the selected place.');
+            }
+        });
+        }
+        }
 </script>
 </body>
 </html>
