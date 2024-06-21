@@ -441,6 +441,7 @@ flag = false;
 } else {
 $("#modelYear").next('.err').remove();
 }
+
 if ($('#make').val() == '') {
 $("<span class='err'>This is required</span>").insertAfter("#make");
 flag = false;
@@ -1582,179 +1583,179 @@ $( function() {
 
 <script>
     let vinValid = false;
-$(document).ready(function() {
+
+    $(document).ready(function() {
         var username = 'CanCap_API_VIN';
         var password = 'hF8TaGnyF3aL';
-        var auth = btoa(username + ':' + password); 
-
-        
+        var auth = btoa(username + ':' + password);
 
         $('#vin').change(function() {
-        const vin = $('#vin').val().trim();
-        if (vin.length === 17) {
-            vinValid = false;
-            $(".err").remove()
-            $.ajax({
-                url: `https://service.canadianblackbook.com/UsedCarWS/CanUsedAPI/UsedVehicle/VIN/${vin}`,
-                method: 'GET',
-                contentType: 'application/json',
-                dataType: 'json',
-                headers: {
-                    'Authorization': 'Basic ' + auth
-                },
-                success: function(data) {
-                    if (data.used_vehicles && data.used_vehicles.used_vehicle_list.length > 0) {
-                        const vehicle = data.used_vehicles.used_vehicle_list[0];
-                        $('#modelYear').val(vehicle.model_year);
-                        $('#make').html(`<option value="${vehicle.make}">${vehicle.make}</option>`);
-                        $('#model').html(`<option value="${vehicle.model}">${vehicle.model}</option>`);
-                        $('#series').html(`<option value="${vehicle.series}">${vehicle.series}</option>`);
-                        $('#bodyStyle').html(`<option value="${vehicle.style}">${vehicle.style}</option>`);
-                        $('#make, #model, #series, #bodyStyle, #modelYear').prop('disabled', true);
-                        
-                    } else {
-                        $("<span  class='err'>No data found for this VIN.</span>").insertAfter("#vin")
+            const vin = $('#vin').val().trim();
+            if (vin.length === 17) {
+                vinValid = false;
+                $(".err").remove()
+                $.ajax({
+                    url: `https://service.canadianblackbook.com/UsedCarWS/CanUsedAPI/UsedVehicle/VIN/${vin}`,
+                    method: 'GET',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    headers: {
+                        'Authorization': 'Basic ' + auth
+                    },
+                    success: function(data) {
+                        if (data.used_vehicles && data.used_vehicles.used_vehicle_list.length > 0) {
+                            const vehicle = data.used_vehicles.used_vehicle_list[0];
+                            $('#modelYear').val(vehicle.model_year);
+                            $('#make').html(`<option value="${vehicle.make}">${vehicle.make}</option>`);
+                            $('#model').html(`<option value="${vehicle.model}">${vehicle.model}</option>`);
+                            $('#series').html(`<option value="${vehicle.series}">${vehicle.series}</option>`);
+                            $('#bodyStyle').html(`<option value="${vehicle.style}">${vehicle.style}</option>`);
+                            $('#make, #model, #series, #bodyStyle, #modelYear').prop('disabled', true);
+                        } else {
+                            $("<span class='err'>No data found for this VIN. Please select your vehicle below.</span>").insertAfter("#vin")
+                            $('#modelYear').prop('disabled', false);
+                            resetDropdowns();
+                        }
+                    },
+                    error: function() {
+                        $("<span class='err'>Failed to retrieve VIN data.</span>").insertAfter("#vin")
                         $('#modelYear').prop('disabled', false);
                         resetDropdowns();
                     }
-                },
-                error: function() {
-                    $("<span  class='err'>Failed to retrieve VIN data.</span>").insertAfter("#vin")
-                    $('#modelYear').prop('disabled', false);
-                    resetDropdowns();
-                }
-            });
-        } else {
-            resetDropdowns();
+                });
+            } else {
+                $('#modelYear').prop('disabled', false);
+                resetDropdowns();
+            }
+        });
+
+        function resetDropdowns() {
+            $('#modelYear').val('');
+            $('#make').html('<option value="">Select Make</option>');
+            $('#model').html('<option value="">Select Model</option>');
+            $('#series').html('<option value="">Select Series</option>');
+            $('#bodyStyle').html('<option value="">Select Body Style</option>');
+            $('#make, #model, #series, #bodyStyle').prop('disabled', true);
         }
-    });
 
-    function resetDropdowns() {
-    $('#modelYear').val('');
-    $('#make').html('<option value="">Select Make</option>');
-    $('#model').html('<option value="">Select Model</option>');
-    $('#series').html('<option value="">Select Series</option>');
-    $('#bodyStyle').html('<option value="">Select Body Style</option>');
-    $('#make, #model, #series, #bodyStyle').prop('disabled', true);
-}
-
-    $('#modelYear').change(function() {
-        const year = $(this).val();
-        if (year) {
-            $.ajax({
-                url: `https://service.canadianblackbook.com/UsedCarWS/CanUsedAPI/Drilldown/ALL/${year}`,
-                method: 'GET',
-                contentType: 'application/json',
-                dataType: 'json',
-                headers: {
-                    'Authorization': 'Basic ' + auth
-                },
-                success: function(data) {
-                    const makeDropdown = $('#make');
-                    makeDropdown.empty().append('<option value="">Select make</option>');
-                    data.drilldown.class_list[0].year_list[0].make_list.forEach(make => {
-                        makeDropdown.append(`<option value="${make.name}">${make.name}</option>`);
-                    });
-                    makeDropdown.prop('disabled', false);
-                }
-            });
-        } else {
-            resetDropdowns();
-        }
-    });
-
-
-    $('#make').change(function() {
-        const year = $('#modelYear').val();
-        const make = $(this).val();
-        if (make) {
-            $.ajax({
-                url: `https://service.canadianblackbook.com/UsedCarWS/CanUsedAPI/Drilldown/ALL/${year}/${make}`,
-                method: 'GET',
-                contentType: 'application/json',
-                dataType: 'json',
-                headers: {
-                    'Authorization': 'Basic ' + auth
-                },
-                success: function(data) {
-                    const modelDropdown = $('#model');
-                    modelDropdown.empty().append('<option value="">Select model</option>');
-                    data.drilldown.class_list[0].year_list[0].make_list[0].model_list.forEach(model => {
-                        modelDropdown.append(`<option value="${model.name}">${model.name}</option>`);
-                    });
-                    modelDropdown.prop('disabled', false);
-                }
-            });
-        } else {
-            $('#model, #series, #bodyStyle').prop('disabled', true).empty().append('<option value="">Select model/series/style</option>');
-        }
-    });
-
-    $('#model').change(function() {
-        const year = $('#modelYear').val();
-        const make = $('#make').val();
-        const model = $(this).val();
-        if (model) {
-            $.ajax({
-                url: `https://service.canadianblackbook.com/UsedCarWS/CanUsedAPI/Drilldown/ALL/${year}/${make}`,
-                method: 'GET',
-                contentType: 'application/json',
-                dataType: 'json',
-                headers: {
-                    'Authorization': 'Basic ' + auth
-                },
-                success: function(data) {
-                    const seriesDropdown = $('#series');
-                    seriesDropdown.empty().append('<option value="">Select series</option>');
-                    const modelData = data.drilldown.class_list[0].year_list[0].make_list[0].model_list.find(m => m.name === model);
-                    if (modelData) {
-                        modelData.series_list.forEach(series => {
-                            seriesDropdown.append(`<option value="${series.name}">${series.name}</option>`);
+        $('#modelYear').change(function() {
+            const year = $(this).val();
+            $('#vin').val('');
+            $('#modelYear').prop('disabled', false);
+            $(".err").remove();
+            if (year) {
+                $.ajax({
+                    url: `https://service.canadianblackbook.com/UsedCarWS/CanUsedAPI/Drilldown/ALL/${year}`,
+                    method: 'GET',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    headers: {
+                        'Authorization': 'Basic ' + auth
+                    },
+                    success: function(data) {
+                        const makeDropdown = $('#make');
+                        makeDropdown.empty().append('<option value="">Select make</option>');
+                        data.drilldown.class_list[0].year_list[0].make_list.forEach(make => {
+                            makeDropdown.append(`<option value="${make.name}">${make.name}</option>`);
                         });
-                        seriesDropdown.prop('disabled', false);
+                        makeDropdown.prop('disabled', false);
                     }
-                }
-            });
-        } else {
-            $('#series, #bodyStyle').prop('disabled', true).empty().append('<option value="">Select series/style</option>');
-        }
-    });
+                });
+            } else {
+                resetDropdowns();
+            }
+        });
 
-    $('#series').change(function() {
-        const year = $('#modelYear').val();
-        const make = $('#make').val();
-        const model = $('#model').val();
-        const series = $(this).val();
-        if (series) {
-            $.ajax({
-                url: `https://service.canadianblackbook.com/UsedCarWS/CanUsedAPI/Drilldown/ALL/${year}/${make}`,
-                method: 'GET',
-                contentType: 'application/json',
-                dataType: 'json',
-                headers: {
-                    'Authorization': 'Basic ' + auth
-                },
-                success: function(data) {
-                    const styleDropdown = $('#bodyStyle');
-                    styleDropdown.empty().append('<option value="">Select style</option>');
-                    const modelData = data.drilldown.class_list[0].year_list[0].make_list[0].model_list.find(m => m.name === model);
-                    if (modelData) {
-                        const seriesData = modelData.series_list.find(s => s.name === series);
-                        if (seriesData) {
-                            seriesData.style_list.forEach(style => {
-                                styleDropdown.append(`<option value="${style.name}">${style.name}</option>`);
+        $('#make').change(function() {
+            const year = $('#modelYear').val();
+            const make = $(this).val();
+            if (make) {
+                $.ajax({
+                    url: `https://service.canadianblackbook.com/UsedCarWS/CanUsedAPI/Drilldown/ALL/${year}/${make}`,
+                    method: 'GET',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    headers: {
+                        'Authorization': 'Basic ' + auth
+                    },
+                    success: function(data) {
+                        const modelDropdown = $('#model');
+                        modelDropdown.empty().append('<option value="">Select model</option>');
+                        data.drilldown.class_list[0].year_list[0].make_list[0].model_list.forEach(model => {
+                            modelDropdown.append(`<option value="${model.name}">${model.name}</option>`);
+                        });
+                        modelDropdown.prop('disabled', false);
+                    }
+                });
+            } else {
+                $('#model, #series, #bodyStyle').prop('disabled', true).empty().append('<option value="">Select model/series/style</option>');
+            }
+        });
+
+        $('#model').change(function() {
+            const year = $('#modelYear').val();
+            const make = $('#make').val();
+            const model = $(this).val();
+            if (model) {
+                $.ajax({
+                    url: `https://service.canadianblackbook.com/UsedCarWS/CanUsedAPI/Drilldown/ALL/${year}/${make}`,
+                    method: 'GET',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    headers: {
+                        'Authorization': 'Basic ' + auth
+                    },
+                    success: function(data) {
+                        const seriesDropdown = $('#series');
+                        seriesDropdown.empty().append('<option value="">Select series</option>');
+                        const modelData = data.drilldown.class_list[0].year_list[0].make_list[0].model_list.find(m => m.name === model);
+                        if (modelData) {
+                            modelData.series_list.forEach(series => {
+                                seriesDropdown.append(`<option value="${series.name}">${series.name}</option>`);
                             });
-                            styleDropdown.prop('disabled', false);
+                            seriesDropdown.prop('disabled', false);
                         }
                     }
-                }
-            });
-        } else {
-            $('#bodyStyle').prop('disabled', true).empty().append('<option value="">Select style</option>');
-        }
-    });
-});
+                });
+            } else {
+                $('#series, #bodyStyle').prop('disabled', true).empty().append('<option value="">Select series/style</option>');
+            }
+        });
 
+        $('#series').change(function() {
+            const year = $('#modelYear').val();
+            const make = $('#make').val();
+            const model = $('#model').val();
+            const series = $(this).val();
+            if (series) {
+                $.ajax({
+                    url: `https://service.canadianblackbook.com/UsedCarWS/CanUsedAPI/Drilldown/ALL/${year}/${make}`,
+                    method: 'GET',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    headers: {
+                        'Authorization': 'Basic ' + auth
+                    },
+                    success: function(data) {
+                        const styleDropdown = $('#bodyStyle');
+                        styleDropdown.empty().append('<option value="">Select style</option>');
+                        const modelData = data.drilldown.class_list[0].year_list[0].make_list[0].model_list.find(m => m.name === model);
+                        if (modelData) {
+                            const seriesData = modelData.series_list.find(s => s.name === series);
+                            if (seriesData) {
+                                seriesData.style_list.forEach(style => {
+                                    styleDropdown.append(`<option value="${style.name}">${style.name}</option>`);
+                                });
+                                styleDropdown.prop('disabled', false);
+                            }
+                        }
+                    }
+                });
+            } else {
+                $('#bodyStyle').prop('disabled', true).empty().append('<option value="">Select style</option>');
+            }
+        });
+    });
 </script>
 
 <!-- Google places -->
@@ -1791,7 +1792,8 @@ $(document).ready(function() {
             }
         });
         }
-        }
+    }
 </script>
+
 </body>
 </html>
