@@ -73,18 +73,20 @@
             font-size: 12px;
         }
 
-        input[type=text],input[type=number],input[type=tel]
-        select,
-        input[type=email] {
-            width: 100% !important;
-            height: 40px;
-            font-size: 24px;
-            padding: 5px 10px !important;
-            border: 1px solid gray;
-            border-radius: 10px !important;
-            font-size: 14px;
-            background-color: whitesmoke;
-        }
+input[type=text], 
+input[type=number], 
+input[type=tel], 
+select, 
+input[type=email] {
+    width: 100% !important;
+    height: 40px;
+    font-size: 24px;
+    padding: 5px 10px !important;
+    border: 1px solid gray;
+    border-radius: 10px !important;
+    font-size: 14px;
+    background-color: whitesmoke;
+}
 
         .form-select:disabled {
             background-color: gray;
@@ -454,18 +456,10 @@ flag = false;
 } else {
 $("#model").next('.err').remove();
 }
-if ($('#series').val() == '') {
-$("<span class='err'>This is required</span>").insertAfter("#series");
-flag = false;
-} else {
-$("#series").next('.err').remove();
 }
-if ($('#bodyStyle').val() == '') {
-$("<span class='err'>This is required</span>").insertAfter("#bodyStyle");
-flag = false;
-} else {
-$("#bodyStyle").next('.err').remove();
-}
+
+if (flag == true) {
+    $('#make, #model, #series, #bodyStyle, #modelYear').prop('disabled', false);
 }
 return flag;
 }
@@ -773,7 +767,7 @@ return true;
                                             <label for="phone">
                                                 Phone Number*
                                             </label>
-                                            <input type="number" class="form-control" id="phone" name="phone" required
+                                            <input type="tel" class="form-control" id="phone" name="phone" required
                                                 onfocusout="singlefieldvalidate('phone','Phone number')" />
                                         </div>
 
@@ -1794,6 +1788,5 @@ $( function() {
         }
     }
 </script>
-
 </body>
 </html>
