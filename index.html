@@ -282,7 +282,7 @@ section.stap {
                         flag1 = false;
                     }
                     if (flag1 == true) {
-                        if(temp == 17 && $('input[name=emptype]:checked').val() != 'Self Employed')
+                        if(temp == 17 && $('input[name=emptype]:checked').val() != 'Self-Employed')
                         {
                             Next = 19;
                         }
@@ -334,10 +334,11 @@ section.stap {
 
         }
 
-        function validateFields(temp) {
+function validateFields(temp) {
 
 var flag = true;
 $('.err').remove();
+
 if (temp == "1") {
     if ($('#firstname').val().trim() == '') {
         $("<span class='err'>First name is required</span>").insertAfter("#firstname");
@@ -366,9 +367,11 @@ if (temp == "1") {
     }
     if ($('#privacyconsent').is(":checked") == false) {
         $("<span class='err'>Privacy consent is required</span>").insertAfter(".privacyconsent");
-
         flag = false;
-    }
+    } 
+    
+    $('#privacyconsent').val($('#privacyconsent').is(':checked') ? 'true' : 'false');
+    $('#marketingconsent').val($('#marketingconsent').is(':checked') ? 'true' : 'false');
 
 
     if (flag == true) {
@@ -776,7 +779,7 @@ return true;
                                             Privacy Consent*<br>
                                         </label>
                                         <br>
-                                        <span  class="description" style="" id="Privacya">
+                                        <span  class="description"  id="Privacya">
                                             I have read, agree, and consent to Safelend Canada's <a
                                                 href="https://www.safelend.ca/privacy-polic" target="_blank"><u>Privacy
                                                     Policy | Safelend Canada</u></a> and <a href="https://www.safelend.ca/terms-of-use"  target="_blank"><u>Terms of Use | Safelend Canada</u></a>

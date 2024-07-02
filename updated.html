@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -73,20 +71,18 @@
             font-size: 12px;
         }
 
-input[type=text], 
-input[type=number], 
-input[type=tel], 
-select, 
-input[type=email] {
-    width: 100% !important;
-    height: 40px;
-    font-size: 24px;
-    padding: 5px 10px !important;
-    border: 1px solid gray;
-    border-radius: 10px !important;
-    font-size: 14px;
-    background-color: whitesmoke;
-}
+        input[type=text],input[type=number],input[type=tel],
+        select,
+        input[type=email] {
+            width: 100% !important;
+            height: 40px;
+            font-size: 24px;
+            padding: 5px 10px !important;
+            border: 1px solid gray;
+            border-radius: 10px !important;
+            font-size: 14px;
+            background-color: whitesmoke;
+        }
 
         .form-select:disabled {
             background-color: gray;
@@ -286,7 +282,7 @@ section.stap {
                         flag1 = false;
                     }
                     if (flag1 == true) {
-                        if(temp == 17 && $('input[name=emptype]:checked').val() != 'Self Employed')
+                        if(temp == 17 && $('input[name=emptype]:checked').val() != 'Self-Employed')
                         {
                             Next = 19;
                         }
@@ -338,10 +334,11 @@ section.stap {
 
         }
 
-        function validateFields(temp) {
+function validateFields(temp) {
 
 var flag = true;
 $('.err').remove();
+
 if (temp == "1") {
     if ($('#firstname').val().trim() == '') {
         $("<span class='err'>First name is required</span>").insertAfter("#firstname");
@@ -370,9 +367,11 @@ if (temp == "1") {
     }
     if ($('#privacyconsent').is(":checked") == false) {
         $("<span class='err'>Privacy consent is required</span>").insertAfter(".privacyconsent");
-
         flag = false;
-    }
+    } 
+    
+    $('#privacyconsent').val($('#privacyconsent').is(':checked') ? 'true' : 'false');
+    $('#marketingconsent').val($('#marketingconsent').is(':checked') ? 'true' : 'false');
 
 
     if (flag == true) {
@@ -457,7 +456,6 @@ flag = false;
 $("#model").next('.err').remove();
 }
 }
-
 if (flag == true) {
     $('#make, #model, #series, #bodyStyle, #modelYear').prop('disabled', false);
 }
@@ -781,7 +779,7 @@ return true;
                                             Privacy Consent*<br>
                                         </label>
                                         <br>
-                                        <span  class="description" style="" id="Privacya">
+                                        <span  class="description"  id="Privacya">
                                             I have read, agree, and consent to Safelend Canada's <a
                                                 href="https://www.safelend.ca/privacy-polic" target="_blank"><u>Privacy
                                                     Policy | Safelend Canada</u></a> and <a href="https://www.safelend.ca/terms-of-use"  target="_blank"><u>Terms of Use | Safelend Canada</u></a>
@@ -901,18 +899,15 @@ return true;
                                 style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px">
                                 <label class="btn ">
                                     <input type="radio" name="payment" id="payment1" autocomplete="off"
-                                        value="Lower Payment and Same term"> Lower Payment
-                                    and Same term
+                                        value="Lower payment, same term"> Lower payment, same term
                                 </label>
                                 <label class="btn">
                                     <input type="radio" name="payment" id="payment2" autocomplete="off"
-                                        value="Same Payment with Shorter Term"> Same Payment with
-                                    Shorter Term
+                                        value="Same payment, shorter term"> Same payment, shorter term
                                 </label>
                                 <label class="btn">
                                     <input type="radio" name="payment" id="payment3" autocomplete="off"
-                                        value="Longer Term and Even Lower Payment"> Longer Term and Even Lower
-                                    Payment
+                                        value="Longer term, even lower payment"> Longer term, even lower payment
                                 </label>
                             </div>
                         </div>
@@ -943,19 +938,19 @@ return true;
                                 style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px">
                                 <label class="btn ">
                                     <input type="radio" name="longAutoLoan" id="longAutoLoan1" autocomplete="off"
-                                        value="0-8 Months"> 0-8 Months
+                                        value="0 - 8 months"> 0 - 8 months
                                 </label>
                                 <label class="btn">
                                     <input type="radio" name="longAutoLoan" id="longAutoLoan2" autocomplete="off"
-                                        value="9 Months - 1 Year"> 9 Months - 1 Year
+                                        value="9 months - 1 year"> 9 months - 1 year
                                 </label> 
                                 <label class="btn">
                                     <input type="radio" name="longAutoLoan" id="longAutoLoan3" autocomplete="off"
-                                        value="1 Year - 2 Year"> 1 Year - 2 Year
+                                        value="1 year - 2 years"> 1 year - 2 years
                                 </label>
                                 <label class="btn">
                                     <input type="radio" name="longAutoLoan" id="longAutoLoan4" autocomplete="off"
-                                        value="Over 2 Years"> Over 2 Years
+                                        value="Over 2 years"> Over 2 years
                                 </label>
                             </div>
                         </div>
@@ -992,7 +987,7 @@ return true;
         
                         <div class="form-group" style="margin-bottom: 10px;">
                             <label for="modelYear">What Model Year is Your Vehicle?</label><br>
-                            <select class="form-select" id="modelYear" name="modelYear" aria-label="select Model year"
+                            <select class="form-select" id="modelYear" name="modelYear" aria-label="select modelYear"
                                 style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px">
                                 <option selected value="">Select model year</option>
                                 <option value="2025">2025</option>
@@ -1139,8 +1134,8 @@ return true;
                                     Bi Weekly
                                 </label> 
                                 <label class="btn">
-                                    <input type="radio" name="pay" id="pay3" autocomplete="off" value="Semi-Monthly">
-                                    Semi-Monthly
+                                    <input type="radio" name="pay" id="pay3" autocomplete="off" value="Semi Monthly">
+                                     Semi Monthly
                                     (ex. 1st and 15th of each month)
                                 </label>
                             </div>
@@ -1313,8 +1308,8 @@ return true;
                                         value="$1000 - $2000"> $1000 - $2000
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name="monthly" id="monthly4" autocomplete="off"
-                                        value="$1000 - $2000"> $2000+
+                                    <input type="radio" name="monthly" id="monthly5" autocomplete="off"
+                                        value="Above $2000"> Above $2000
                                 </label>
                             </div>
                         </div>
@@ -1411,7 +1406,7 @@ return true;
                                 </label>
                                 <label class="btn">
                                     <input type="radio" name="emptype" id="emptype2" autocomplete="off"
-                                        value="Self Employed"> Self Employed
+                                        value="Self-Employed"> Self-Employed
                                 </label>
                                 <label class="btn ">
                                     <input type="radio" name="emptype" id="emptype3" autocomplete="off" value="Retired">
@@ -1525,32 +1520,32 @@ return true;
    
 
     // Menu Dropdown Toggle
-	if($('.menu-trigger').length){
-		$(".menu-trigger").on('click', function() {	
-			$(this).toggleClass('active');
-			$('.header-area .nav').slideToggle(200);
-		});
-	}
+    if($('.menu-trigger').length){
+        $(".menu-trigger").on('click', function() { 
+            $(this).toggleClass('active');
+            $('.header-area .nav').slideToggle(200);
+        });
+    }
 
 
-	// Menu elevator animation
-	$('.scroll-to-section a[href*=\\#]:not([href=\\#])').on('click', function() {
-		if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-			var target = $(this.hash);
-			target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-			if (target.length) {
-				var width = $(window).width();
-				if(width < 991) {
-					$('.menu-trigger').removeClass('active');
-					$('.header-area .nav').slideUp(200);	
-				}				
-				$('html,body').animate({
-					scrollTop: (target.offset().top) - 80
-				}, 700);
-				return false;
-			}
-		}
-	});
+    // Menu elevator animation
+    $('.scroll-to-section a[href*=\\#]:not([href=\\#])').on('click', function() {
+        if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+            var target = $(this.hash);
+            target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+            if (target.length) {
+                var width = $(window).width();
+                if(width < 991) {
+                    $('.menu-trigger').removeClass('active');
+                    $('.header-area .nav').slideUp(200);    
+                }               
+                $('html,body').animate({
+                    scrollTop: (target.offset().top) - 80
+                }, 700);
+                return false;
+            }
+        }
+    });
 
 // Phone Number Validation //
 $(function() {
