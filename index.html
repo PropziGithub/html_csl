@@ -261,19 +261,22 @@ section.stap {
                     else if (temp == 14 && validateFields(temp, 'monthly')) {
                         flag1 = true;
                     }
-                    else if (temp == 15 && validateFields(temp, '6months')) {
+                    else if (temp == 15 && singlefieldvalidate('currentemp','Current employer')) {
                         flag1 = true;
                     }
-                    else if (temp == 16 && singlefieldvalidate('gross', 'Monthly Gross Income')) {
+                    else if (temp == 16 && validateFields(temp, '6months')) {
                         flag1 = true;
                     }
-                    else if (temp == 17 && validateFields(temp, 'emptype')) {
+                    else if (temp == 17 && singlefieldvalidate('gross', 'Monthly Gross Income')) {
                         flag1 = true;
                     }
-                    else if (temp == 18 && singlefieldvalidate('work', 'Employer name')) {
+                    else if (temp == 18 && validateFields(temp, 'emptype')) {
                         flag1 = true;
                     }
-                    else if (temp == 19 && singlefieldvalidate('jobtitle', 'Job title')) {
+                    else if (temp == 19 && singlefieldvalidate('work', 'Employer name')) {
+                        flag1 = true;
+                    }
+                    else if (temp == 20 && singlefieldvalidate('jobtitle', 'Job title')) {
                         $('.span-content').text('Almost ');
                         flag1 = true;
                     }
@@ -282,9 +285,9 @@ section.stap {
                         flag1 = false;
                     }
                     if (flag1 == true) {
-                        if(temp == 17 && $('input[name=emptype]:checked').val() != 'Self-Employed')
+                        if(temp == 18 && $('input[name=emptype]:checked').val() != 'Self-Employed')
                         {
-                            Next = 19;
+                            Next = 20;
                         }
 
                         $('.page' + temp).css('display', 'none');
@@ -544,6 +547,16 @@ else if (temp == "14") {
     }
 }
 else if (temp == "15") {
+    if ($('#currentemp').val().trim() != '') {
+
+        return true;
+    }
+    else {
+        $("<span class='err'>Current employer is required</span>").insertAfter("#currentemp");
+        return false
+    }
+}
+else if (temp == "16") {
     $('.span-content').text('Less than 30 seconds from');
     if ($('input[name=6months]').is(":checked") == false) {
         $("<span class='err'>This is required</span>").insertAfter(".6months");
@@ -553,16 +566,12 @@ else if (temp == "15") {
         $("<span class='err'>Previous employer is required</span>").insertAfter("#previousemp");
         return false;
     }
-    else if($('input[name=6months]').is(":checked") == true && $('input[name=6months]:checked').val() == 'Yes' && $('#currentemp').val().trim() =='') {
-        $("<span class='err'>Current employer is required</span>").insertAfter("#currentemp");
-        return false;
-    }
     else
     {
         return true;
     }
 }
-else if (temp == "16") {
+else if (temp == "17") {
     if ($('#gross').val().trim() != '') {
 
         return true;
@@ -572,7 +581,7 @@ else if (temp == "16") {
         return false
     }
 }
-else if (temp == "17") {
+else if (temp == "18") {
     if ($('input[name=emptype]').is(":checked") == false) {
         $("<span class='err'>This is required</span>").insertAfter(".emptype");
         return false;
@@ -581,7 +590,7 @@ else if (temp == "17") {
         return true;
     }
 }
-else if (temp == "18") {
+else if (temp == "19") {
     
     if ($('#work').val().trim() != '') {
 
@@ -592,7 +601,7 @@ else if (temp == "18") {
         return false
     }
 }
-else if (temp == "19") {
+else if (temp == "20") {
     if ($('#jobtitle').val().trim() != '') {
         return true;
     }
@@ -602,7 +611,7 @@ else if (temp == "19") {
     }
 }
 
-else if (temp == "20") {
+else if (temp == "21") {
     return true;
 }
 return true;
@@ -639,12 +648,6 @@ return true;
                 }
                 else {
                     $('.previousemp1').css('display', 'none');
-                }
-                if (this.value == 'Yes') {
-                    $('.currentemp1').css('display', 'block');
-                }
-                else {
-                    $('.currentemp1').css('display', 'none');
                 }
 
             });
@@ -733,7 +736,7 @@ return true;
                     </div>
                 </div>
             </div>
-            <form id="leadFormId" method="post">
+            <form action="https://go.pardot.com/l/1061552/2024-04-11/bjqqcy" method="post">
             <input type="hidden" id="LPTYPE" name="LPTYPE" value="A">
                 <div class="row page1">
                     <div class="col-md-12">
@@ -1332,7 +1335,32 @@ return true;
                 </div>
             </div>
         </div>
+        <!-- Here Employer -->
         <div class="row page15" style="display: none;">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="currentemp">
+                                Current employer name
+                            </label><br>
+                            <input type="text" class="form-control" id="currentemp" name="currentemp"
+                                onfocusout="singlefieldvalidate('currentemp','Current employer')" />
+                        </div>
+                        <div class="form-group" align="center">
+                            <div style="margin:20px 0;border-radius: 10px;">
+                                <input type="button" id="next15" value="Next" onclick="nextFunction('15','16')"
+                                    style="font-size: 24px;" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row page16" style="display: none;">
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-3"></div>
@@ -1358,19 +1386,10 @@ return true;
                                 <input type="text" class="form-control" id="previousemp" name="previousemp"
                                     onfocusout="singlefieldvalidate('previousemp','Previous employer')" />
                             </div>
-
-                            <div class="form-group currentemp1" style="display:none">
-                                <label for="">
-                                    Current employer name
-                                </label><br>
-                                <input type="text" class="form-control" id="currentemp" name="currentemp"
-                                    onfocusout="singlefieldvalidate('currentemp','current employer')" />
-                            </div>
                         </div>
-
                         <div class="form-group" align="center">
                             <div style="margin:20px 0;border-radius: 10px;">
-                                <input type="button" id="next14" value="Next" onclick="nextFunction('15','16')"
+                                <input type="button" id="next14" value="Next" onclick="nextFunction('16','17')"
                                     style="font-size: 24px;" />
                             </div>
 
@@ -1380,7 +1399,7 @@ return true;
                 </div>
             </div>
         </div>
-        <div class="row page16" style="display: none;">
+        <div class="row page17" style="display: none;">
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-3"></div>
@@ -1394,7 +1413,7 @@ return true;
                         </div>
                         <div class="form-group" align="center">
                             <div style="margin:20px 0;border-radius: 10px;">
-                                <input type="button" id="next15" value="Next" onclick="nextFunction('16','17')"
+                                <input type="button" id="next15" value="Next" onclick="nextFunction('17','18')"
                                     style="font-size: 24px;" />
                             </div>
 
@@ -1404,7 +1423,7 @@ return true;
                 </div>
             </div>
         </div>
-        <div class="row page17" style="display: none;">
+        <div class="row page18" style="display: none;">
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-3"></div>
@@ -1436,31 +1455,7 @@ return true;
                         </div>
                         <div class="form-group" align="center">
                             <div style="margin:20px 0;border-radius: 10px;">
-                                <input type="button" id="next16" value="Next" onclick="nextFunction('17','18')"
-                                    style="font-size: 24px;" />
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-md-3"></div>
-                </div>
-            </div>
-        </div>
-        <div class="row page18" style="display: none;">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="work">
-                                Employer Name and Address? (If Self Employed please tell us your company name)
-                            </label><br>
-                            <input type="text" class="form-control" id="work" name="work"
-                                onfocusout="singlefieldvalidate('work','Employer name')" />
-                        </div>
-                        <div class="form-group" align="center">
-                            <div style="margin:20px 0;border-radius: 10px;">
-                                <input type="button" id="next17" value="Next" onclick="nextFunction('18','19')"
+                                <input type="button" id="next16" value="Next" onclick="nextFunction('18','19')"
                                     style="font-size: 24px;" />
                             </div>
 
@@ -1476,6 +1471,30 @@ return true;
                     <div class="col-md-3"></div>
                     <div class="col-md-6">
                         <div class="form-group">
+                            <label for="work">
+                                Employer Name and Address? (If Self Employed please tell us your company name)
+                            </label><br>
+                            <input type="text" class="form-control" id="work" name="work"
+                                onfocusout="singlefieldvalidate('work','Employer name')" />
+                        </div>
+                        <div class="form-group" align="center">
+                            <div style="margin:20px 0;border-radius: 10px;">
+                                <input type="button" id="next17" value="Next" onclick="nextFunction('19','20')"
+                                    style="font-size: 24px;" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row page20" style="display: none;">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <div class="form-group">
                             <label for="jobtitle">
                                 What Is Your Job Title?
                             </label><br>
@@ -1484,7 +1503,7 @@ return true;
                         </div>
                         <div class="form-group" align="center">
                             <div style="margin:20px 0;border-radius: 10px;">
-                                <input type="button" id="next18" value="Next" onclick="nextFunction('19','20')"
+                                <input type="button" id="next18" value="Next" onclick="nextFunction('20','21')"
                                     style="font-size: 24px;" />
                             </div>
 
@@ -1495,7 +1514,7 @@ return true;
             </div>
         </div>
 
-        <div class="row page20" style="display: none;">
+        <div class="row page21" style="display: none;">
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-3"></div>
@@ -1798,14 +1817,6 @@ $( function() {
         });
         }
     }
-    $('#leadFormId').submit(function(event) {
-        event.preventDefault();
-        var formData = {};
-        $(this).serializeArray().forEach(function(field) {
-            formData[field.name] = field.value;
-        });
-        console.log(formData);
-    });
 </script>
 </body>
 </html>
