@@ -261,7 +261,7 @@ section.stap {
                     else if (temp == 14 && validateFields(temp, 'monthly')) {
                         flag1 = true;
                     }
-                    else if (temp == 15 && singlefieldvalidate('employername','Employer name')) {
+                    else if (temp == 15 && singlefieldvalidate('currentemp','Current employer name')) {
                         flag1 = true;
                     }
                     else if (temp == 16 && validateFields(temp, '6months')) {
@@ -547,12 +547,12 @@ else if (temp == "14") {
     }
 }
 else if (temp == "15") {
-    if ($('#employername').val().trim() != '') {
+    if ($('#currentemp').val().trim() != '') {
 
         return true;
     }
     else {
-        $("<span class='err'>Employer name is required</span>").insertAfter("#employername");
+        $("<span class='err'>Current employer is required</span>").insertAfter("#currentemp");
         return false
     }
 }
@@ -765,7 +765,7 @@ return true;
                                         </div>
                                         <div class="col-md-6">
                                             <label for="email">
-                                                What is your Email?*
+                                                What Is Your Email?*
                                             </label>
                                             <input type="email" class="form-control" id="emailaddress"
                                                 name="emailaddress" required
@@ -868,7 +868,7 @@ return true;
                         <div class="form-group" align="center">
 
                             <label for="financed">
-                                Is your vehicle currently financed?
+                                Is Your Vehicle Currently Financed?
                             </label><br>
                             <div class="btn-group btn-group-toggle financed stack" data-toggle="buttons"
                                 style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px">
@@ -996,7 +996,7 @@ return true;
                         </div>
         
                         <div class="form-group" style="margin-bottom: 10px;">
-                            <label for="modelYear">What Model Year is Your Vehicle?</label><br>
+                            <label for="modelYear">What Model Year Is Your Vehicle?</label><br>
                             <select class="form-select" id="modelYear" name="modelYear" aria-label="select modelYear"
                                 style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px">
                                 <option selected value="">Select model year</option>
@@ -1019,28 +1019,28 @@ return true;
                             </select>
                         </div>
                         <div class="form-group" style="margin-bottom: 10px;">
-                            <label for="make">What Make is Your Vehicle?</label><br>
+                            <label for="make">What Make Is Your Vehicle?</label><br>
                             <select id="make" disabled class="form-select" name="make" aria-label="select make"
                                 style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px">
                                 <option value="">Select make</option>
                             </select>
                         </div>
                         <div class="form-group" style="margin-bottom: 10px;">
-                            <label for="model">What Model is Your Vehicle?</label><br>
+                            <label for="model">What Model Is Your Vehicle?</label><br>
                             <select id="model" disabled class="form-select" name="model" aria-label="select Model"
                                 style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px">
                                 <option value="">Select model</option>
                             </select>
                         </div>
                         <div class="form-group" style="margin-bottom: 10px;">
-                            <label for="series">What Series is Your Vehicle?</label><br>
+                            <label for="series">What Series Is Your Vehicle?</label><br>
                             <select id="series" disabled class="form-select" name="series" aria-label="select Series"
                                 style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px">
                                 <option value="">Select series</option>
                             </select>
                         </div>
                         <div class="form-group" style="margin-bottom: 10px;">
-                            <label for="bodyStyle">What Body Style is Your Vehicle?</label><br>
+                            <label for="bodyStyle">What Body Style Is Your Vehicle?</label><br>
                             <select id="bodyStyle" disabled class="form-select" name="bodyStyle" aria-label="select bodyStyle"
                                 style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px;border:0px">
                                 <option value="">Select style</option>
@@ -1131,7 +1131,7 @@ return true;
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="pay">
-                                What is your Auto Loan Payment Frequency?
+                                What Is Your Auto Loan Payment Frequency?
                             </label><br>
                             <div class="btn-group btn-group-toggle pay" data-toggle="buttons"
                                 style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px">
@@ -1170,7 +1170,7 @@ return true;
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="owing">
-                                Amount owing - Approx. How Much do You have Owing On Your Current Auto Loan?
+                                Amount Owing - Approx. How Much Do You Have Owing On Your Current Auto Loan?
                             </label><br>
                             <input type="text" class="form-control" id="owing" name="owing"
                                 onfocusout="singlefieldvalidate('owing','Amount owing')" />
@@ -1272,7 +1272,7 @@ return true;
                             </div>
                             <div class="form-group previousaddress" style="padding-top: 20px;display: none;">
                                 <label for="previousaddress">
-                                    What was your previous address?
+                                    What Was Your Previous Address?
                                 </label><br>
                                 <input type="text" class="form-control" id="previousaddress" name="previousaddress"
                                     onfocusout="singlefieldvalidate('previousaddress','Previous address')" />
@@ -1297,7 +1297,7 @@ return true;
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="monthly">
-                                What is your Monthly Rent / Mortgage Payments?
+                                What Is Your Monthly Rent / Mortgage Payments?
                             </label><br>
                             <div class="btn-group btn-group-toggle monthly" data-toggle="buttons"
                                 style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px">
@@ -1342,11 +1342,11 @@ return true;
                     <div class="col-md-3"></div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="employername">
-                               Employer name
+                            <label for="currentemp">
+                                Current Employer Name
                             </label><br>
-                            <input type="text" class="form-control" id="employername" name="employername"
-                                onfocusout="singlefieldvalidate('employername',' Employer name')" />
+                            <input type="text" class="form-control" id="currentemp" name="currentemp"
+                                onfocusout="singlefieldvalidate('currentemp',' Current employer name')" />
                         </div>
                         <div class="form-group" align="center">
                             <div style="margin:20px 0;border-radius: 10px;">
@@ -1381,7 +1381,7 @@ return true;
                             </div>
                             <div class="form-group previousemp1" style="display:none">
                                 <label for="">
-                                    Previous employer name
+                                    Previous Employer Name
                                 </label><br>
                                 <input type="text" class="form-control" id="previousemp" name="previousemp"
                                     onfocusout="singlefieldvalidate('previousemp','Previous employer')" />
@@ -1430,7 +1430,7 @@ return true;
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="emptype">
-                                Employment type
+                                Employment Type
                             </label><br>
                             <div class="btn-group btn-group-toggle emptype" data-toggle="buttons"
                                 style="background-color: whitesmoke;padding: 10px;border-radius: 10px;line-height: 16px">
@@ -1521,7 +1521,7 @@ return true;
                     <div class="col-md-6">
                         
                             <label>
-                                What is your date of birth?<br>
+                                What Is Your Date Of Birth?<br>
                             </label>
 
                             <br>
